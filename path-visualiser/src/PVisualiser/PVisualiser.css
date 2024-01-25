@@ -1,0 +1,6 @@
+
+/*Makes sures the matrix displayed is within the center*/
+.matrix {
+    display: center;
+    margin: 150px 0 0;
+}
