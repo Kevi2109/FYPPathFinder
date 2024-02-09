@@ -1,6 +1,7 @@
 import Node from './Node/Node';
 import React, {Component} from 'react';
 import {dijkstra_algorithm, getShortestPathOfNodes} from '../algorithms/dijkstra';
+import {aStarSearch, getShortestPathOfNodes1} from '../algorithms/aStar';
 import './PVisualiser.css';
 
 
@@ -57,6 +58,7 @@ export default class PVisualiser extends Component {
         }
     }
 
+
     animateShortestPath(shortestPathOfNodes){
         console.log(shortestPathOfNodes);
         for (let k = 0; k < shortestPathOfNodes.length; k++){
@@ -75,6 +77,19 @@ export default class PVisualiser extends Component {
         const finishNode = matrix[END_NODE_ROW][END_NODE_COL];
         const visitedNodesInOrder = dijkstra_algorithm(matrix, startNode, finishNode)
         const shortestPathOfNodes = getShortestPathOfNodes(finishNode)
+        //console.log(shortestPathOfNodes);
+        this.animatedDijkstraNodes(visitedNodesInOrder, shortestPathOfNodes);
+        // once we have the visited node from dijkstra
+        // we can call another node to get nodes in the shortest path order. Which will start at the finishNode and wiil work itself backwards in a linear fashion
+        //console.log(visitedNodesInOrder); // ordered array of all the nodes we have visited in order. -> we will iteriate over this.
+    }
+
+    visualise_aStar(){
+        const{matrix} = this.state;
+        const startNode = matrix[START_NODE_ROW][START_NODE_COL];
+        const finishNode = matrix[END_NODE_ROW][END_NODE_COL];
+        const visitedNodesInOrder = aStarSearch(matrix, startNode, finishNode)
+        const shortestPathOfNodes = getShortestPathOfNodes1(finishNode)
         //console.log(shortestPathOfNodes);
         this.animatedDijkstraNodes(visitedNodesInOrder, shortestPathOfNodes);
         // once we have the visited node from dijkstra
@@ -111,7 +126,7 @@ export default class PVisualiser extends Component {
             <button onClick={() => this.visualise_dij()}>
                 Visualise Dijkstra's algorithm
             </button>
-            <button>
+            <button onClick={() => this.visualise_aStar()}>
                 Visualize A* Algorithm
             </button>
             <div className="matrix">   
