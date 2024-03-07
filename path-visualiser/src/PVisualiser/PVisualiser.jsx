@@ -2,6 +2,8 @@ import Node from './Node/Node';
 import React, {Component} from 'react';
 import {dijkstra_algorithm, getShortestPathOfNodes} from '../algorithms/dijkstra';
 import {aStarSearch, getShortestPathOfNodes1} from '../algorithms/aStar';
+import {randomWalksAlgorithm, getShortestPathOfNodes2} from '../algorithms/test';
+import {plantGrowthAlgorithm, getShortestPathOfNodes3} from '../algorithms/natureInspired';
 import './PVisualiser.css';
 
 
@@ -96,6 +98,33 @@ export default class PVisualiser extends Component {
         // we can call another node to get nodes in the shortest path order. Which will start at the finishNode and wiil work itself backwards in a linear fashion
         //console.log(visitedNodesInOrder); // ordered array of all the nodes we have visited in order. -> we will iteriate over this.
     }
+
+    visualise_RWA(){
+        const{matrix} = this.state;
+        const startNode = matrix[START_NODE_ROW][START_NODE_COL];
+        const finishNode = matrix[END_NODE_ROW][END_NODE_COL];
+        const visitedNodesInOrder = randomWalksAlgorithm(matrix, startNode, finishNode)
+        console.log(visitedNodesInOrder);
+        const shortestPathOfNodes = getShortestPathOfNodes2(finishNode)
+        //console.log(shortestPathOfNodes);
+        this.animatedDijkstraNodes(visitedNodesInOrder, shortestPathOfNodes);
+        // once we have the visited node from dijkstra
+        // we can call another node to get nodes in the shortest path order. Which will start at the finishNode and wiil work itself backwards in a linear fashion
+        //console.log(visitedNodesInOrder); // ordered array of all the nodes we have visited in order. -> we will iteriate over this.
+    }
+
+    visualise_ACO() {
+            const{matrix} = this.state;
+            const startNode = matrix[START_NODE_ROW][START_NODE_COL];
+            const finishNode = matrix[END_NODE_ROW][END_NODE_COL];
+            const visitedNodesInOrder = plantGrowthAlgorithm(matrix, startNode, finishNode)
+            const shortestPathOfNodes = getShortestPathOfNodes3(finishNode)
+            //console.log(shortestPathOfNodes);
+            this.animatedDijkstraNodes(visitedNodesInOrder, shortestPathOfNodes);
+            // once we have the visited node from dijkstra
+            // we can call another node to get nodes in the shortest path order. Which will start at the finishNode and wiil work itself backwards in a linear fashion
+            //console.log(visitedNodesInOrder); // ordered array of all the nodes we have visited in order. -> we will iteriate over this.
+    }
     
 
 //    componentDidMount() {
@@ -128,6 +157,12 @@ export default class PVisualiser extends Component {
             </button>
             <button onClick={() => this.visualise_aStar()}>
                 Visualize A* Algorithm
+            </button>
+            <button onClick={() => this.visualise_RWA()}>
+                Nature Inspired Algoritm
+            </button>
+            <button onClick={() => this.visualise_ACO()}>
+                Nature Inspired Algoritm 2
             </button>
             <div className="matrix">   
                 {matrix.map((rows, rowsIndex)=>{ // Maps over the array 'matrix' and will itterate over the 'rows' array it will keep ahold of the current index
