@@ -1,3 +1,7 @@
+// The Code here for Dijksra was developed with aid of the youtube video "https://www.youtube.com/watch?v=msttfIHHkak&t=1229s&ab_channel=Cl%C3%A9mentMihailescu"
+// This code sets the foundation to how the other algorthims are written by following a similar implementation style 
+// I also developled some parts of this section by myself and adjusted the code based on the fact that I have multiple algos; compared to the one only shown within the tutorial
+
 
 // Defines the variables within the object 'node' -> has common properties associated with a node
 //const node = {
@@ -7,7 +11,7 @@
 export function dijkstra_algorithm(matrix, startNode, finishNode){
     const visitedNodesInOrder = [];
     if(!startNode || !finishNode || startNode === finishNode){
-        return false;
+        return false; // We return false for any invalid inputs.
     } // we take in our matrix, SN, FN as param and make sure with the if statement there aren't any edge cases. eg no SN or FN/ or they overlap.
 
     // Since this is Dijksta, we want to set the distance to every other node to infinity, as we can't reach all the nodes
@@ -20,7 +24,7 @@ export function dijkstra_algorithm(matrix, startNode, finishNode){
         const closetNode = unvisitedNodes.shift(); // Once we get to our closet node, we then in he while loop updates all the neigbouring nodes, will then have whatever the current distance is +1 as it "shifts" that value/ pops it over. Instead of using unshift.
                                                    // Shift method = mutating method. removes the first element from the "UVN" array and assigns it to the var "CN"S
                                                    // Updates "CN" for further 
-
+        // Edge cases
         //HANDLE WALLS
         if(closetNode.isWall) continue;
         //HANDLE IMPOSSIBLE LATER
@@ -32,6 +36,7 @@ export function dijkstra_algorithm(matrix, startNode, finishNode){
         updateUnvisitedNeighbors(closetNode, matrix);                      // returns an array of VN in the order we have visited them.
                                                                   // So after every closet node, we appened the closet node to the array VNIO
                                                                   // does so we can animate the nodes in the order we have visited them.
+        console.log('Visited Nodes:', visitedNodesInOrder);                                             
     }
 }
 
@@ -49,6 +54,9 @@ function updateUnvisitedNeighbors(node, matrix){
 // When we are updating the neigbors with a new distance, we mark them with the previous node
 // that will be the current node we are at. which adventually gives us the shortest path.
 
+// This function intialises an empty array and then gets the rows and cols properties from the node object.
+// if the node is to above, below, on the left hand side or right it will push the node into the newley construted neighbours array.
+// Overall this function only gets the unvisited neighbouring nodes and indetifies adjcent nodes.
 function getUnvisitedNeighbors(node,matrix){
 
     const neighbors = [];
@@ -63,6 +71,9 @@ function getUnvisitedNeighbors(node,matrix){
     return neighbors.filter(neighbor => !neighbor.isVisited); //filters the neigbors by those of which that aren't visited/ unvisitied.
 }
 
+// This function here turns the 2d martix into 1D array so its easier to keep track of 
+// the order of nodes within the matirx, row by row, thus preserving it.
+// The inner loop iterates through each node that is within the current row, whilst the outer for loop iterates through each node within the matrix
 function getAllNodes(matrix) {
     const nodes = [];
     for (const rows of matrix) {
@@ -82,6 +93,6 @@ function getAllNodes(matrix) {
     }
     return shortestPathOfNodes;
   }
-  // This method will help us fine the shortest path as this preforms the calulations backwards from the finsihing node to where we started.
+  // This method will help us find the shortest path as this preforms the calulations backwards from the finsihing node to where we started.
   // kinda like a linked list
 

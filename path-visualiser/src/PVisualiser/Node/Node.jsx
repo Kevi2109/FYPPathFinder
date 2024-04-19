@@ -1,3 +1,5 @@
+// The Code here for Dijksra was developed with aid of the youtube video "https://www.youtube.com/watch?v=msttfIHHkak&t=1229s&ab_channel=Cl%C3%A9mentMihailescu"
+
 // Node component
 import React, {Component} from 'react';
 

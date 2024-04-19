@@ -1,3 +1,6 @@
+
+/* The Code here for Dijksra was developed with aid of the youtube video "https://www.youtube.com/watch?v=msttfIHHkak&t=1229s&ab_channel=Cl%C3%A9mentMihailescu"
+/* From the youtube tutorial as stated in the report to add ccs styles. For when the algorithm is searching for the end node and for the shortest path when found.
 /*Controls the Nodes width and height */
 .node {
     width: 30px;
@@ -66,6 +69,7 @@ animation-fill-mode: forwards;
 animation-play-state: running;
 }
 
+/*Keyframes used to apply colour to the shortest path*/
 @keyframes shortestPath {
     0% {
         transform: scale(.6);
